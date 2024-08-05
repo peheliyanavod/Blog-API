@@ -20,6 +20,11 @@ const userSchema = mongoose.Schema({
     role:{
         type: Number,
         default: 3
+     },
+     verificationCode: String,
+     isVerified: {
+        type: Boolean,
+        default: false
      }
 },
 {timestamp: true}
