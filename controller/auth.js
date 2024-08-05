@@ -1,4 +1,5 @@
 const { User } = require("../models");
+const hashPassword = require("../utils/hashPassword")
 
 const signup = async (req, res, next) => {
     try {
@@ -9,6 +10,8 @@ const signup = async (req, res, next) => {
             res.code = 400;
             throw new Error("Email already exist");
         }
+
+       
 
         if(!name){
             res.code = 400;
@@ -30,7 +33,9 @@ const signup = async (req, res, next) => {
             throw new Error("Password should be 6 char long");
         }
 
-        const newUser = new User({name,email,password,role});
+        const hashedPassword =await hashPassword(password);
+
+        const newUser = new User({name, email, password:hashedPassword, role});
 
         await newUser.save();
 
