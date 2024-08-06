@@ -1,13 +1,14 @@
 const nodemailer = require("nodemailer");
+const {senderEmail, emailPassword} = require("../config/keys")
 
 const sendEmail = async ({emailTo, subject, code, content}) => {
     const transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 587,
-        secure: false, // use STARTTLS, not direct SSL/TLS
+        secure: false, 
         auth: {
-            user: "hwpeheliya@gmail.com",
-            pass: "bslsoarpggewshra"
+            user: senderEmail,
+            pass: emailPassword
         },
         tls: {
             ciphers: 'SSLv3'
