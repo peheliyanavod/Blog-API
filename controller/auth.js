@@ -233,4 +233,36 @@ const changePassword = async (req, res, next) => {
   }
 }
 
-module.exports = { signup, signin, verifyCode, verifyUser, forgotPassword, recoverPassword, changePassword };
+const updateProfile = async (req, res, next) => {
+  try {
+    const {_id} = req.user;
+    const {name,email} = req.body;
+
+    const user = await User.findById(_id).select("-password");
+    if(!user){
+      res.code = 400;
+      throw new Error("User not found");
+    }
+
+    user.name = name ? name : user.name;
+    user.email = email ? email : user.email;
+
+    if(email){
+      const isUserExist = await User.findOne({email});
+      if(isUserExist && isUserExist.email === email && String(user._id) !== String(isUserExist._id)){
+        res.code = 400;
+        throw new Error("Email already exist");
+      }
+      user.isVerified = false;
+
+    }
+
+    await user.save();
+    res.status(200).json({code: 200, status: true, message: "User profile updated successfully", data: {user}});
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = { signup, signin, verifyCode, verifyUser, forgotPassword, recoverPassword, changePassword, updateProfile };

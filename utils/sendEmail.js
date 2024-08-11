@@ -14,7 +14,7 @@ const sendEmail = async ({ emailTo, subject, code, content }) => {
     });
 
     const message = {
-      from: senderEmail, // Include the sender email address
+      from: senderEmail, 
       to: emailTo,
       subject,
       html: `<div>
