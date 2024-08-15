@@ -1,3 +1,4 @@
 const User = require("./user");
+const Category = require("./category");
 
-module.exports = {User};
+module.exports = {User, Category};
