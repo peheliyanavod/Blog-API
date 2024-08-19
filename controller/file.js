@@ -1,6 +1,7 @@
 const path = require("path");
 const {validateExtention} = require("../validators/file");
 const {uploadFileToS3} = require("../utils/awsS3");
+const File = require("../models/file");
 
 const uploadFile = async (req, res, next) => {
     try {
@@ -20,6 +21,17 @@ const uploadFile = async (req, res, next) => {
         }
 
         const key = await uploadFileToS3({file, ext});
+
+        if(key){
+            const newFile = File({
+                key,
+                size: file.size,
+                mimetype: file.mimetype,
+                createdBy: req.user._id
+            });
+
+            await newFile.save();
+        }
         res.status(201).json({code: 201, status: true, message: "File uploaded successfully", data: {key}})
     } catch (error) {
         next(error);
