@@ -26,7 +26,11 @@ const userSchema = mongoose.Schema({
      isVerified: {
         type: Boolean,
         default: false
-     }
+     },
+     profilePic: {
+        type: mongoose.Types.ObjectId,
+        ref: "file"
+    }
 },
 {timestamp: true}
 );
