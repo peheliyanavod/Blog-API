@@ -17,7 +17,7 @@ module.exports = {
   senderEmail: SENDER_EMAIL,
   emailPassword: EMAIL_PASSWORD,
   awsAccessKey: AWS_ACCESS_KEY,
-  awsSecretAccess: AWS_SECRET_ACCESS_KEY,
+  awsSecretAccessKey: AWS_SECRET_ACCESS_KEY,
   awsBucketName: AWS_BUCKET_NAME,
   awsRegion: AWS_REGION
 };
